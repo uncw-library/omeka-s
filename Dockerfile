@@ -26,7 +26,7 @@ RUN curl -J -L -s -k \
 &&  unzip -q /var/www/omeka-s-1.2.0.zip -d /var/www/ \
 &&  rm /var/www/omeka-s-1.2.0.zip \
 &&  rm -rf /var/www/html \
-&&  mv /var/www/omeka-s-1.2.0 /var/www/html \
+&&  mv /var/www/omeka-s /var/www/html \
 &&  chown -R www-data:www-data /var/www/html
 
 COPY ./database.ini /var/www/html/config/database.ini
