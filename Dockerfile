@@ -22,11 +22,11 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 RUN curl -J -L -s -k \
     'https://github.com/omeka/omeka-s/releases/download/v1.2.0/omeka-s-1.2.0.zip' \
-    -o /var/www/omeka-s.zip \
-&&  unzip -q /var/www/omeka-s.zip -d /var/www/ \
-&&  rm /var/www/omeka-s.zip \
+    -o /var/www/omeka-s-1.2.0.zip \
+&&  unzip -q /var/www/omeka-s-1.2.0.zip -d /var/www/ \
+&&  rm /var/www/omeka-s-1.2.0.zip \
 &&  rm -rf /var/www/html \
-&&  mv /var/www/omeka-s /var/www/html \
+&&  mv /var/www/omeka-s-1.2.0 /var/www/html \
 &&  chown -R www-data:www-data /var/www/html
 
 COPY ./database.ini /var/www/html/config/database.ini
