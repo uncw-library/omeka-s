@@ -21,10 +21,10 @@ RUN docker-php-ext-install -j$(nproc) iconv mcrypt \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 RUN curl -J -L -s -k \
-    'https://github.com/omeka/omeka-s/releases/download/v1.2.0/omeka-s-1.2.0.zip' \
-    -o /var/www/omeka-s-1.2.0.zip \
-&&  unzip -q /var/www/omeka-s-1.2.0.zip -d /var/www/ \
-&&  rm /var/www/omeka-s-1.2.0.zip \
+    'https://github.com/omeka/omeka-s/releases/download/v2.1.2/omeka-s-2.1.2.zip' \
+    -o /var/www/omeka-s-2.1.2.zip \
+&&  unzip -q /var/www/omeka-s-2.1.2.zip -d /var/www/ \
+&&  rm /var/www/omeka-s-2.1.2.zip \
 &&  rm -rf /var/www/html \
 &&  mv /var/www/omeka-s /var/www/html \
 &&  chown -R www-data:www-data /var/www/html
