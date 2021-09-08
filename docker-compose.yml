@@ -1,0 +1,59 @@
+version: '3.7'
+
+volumes:
+  db_data:
+
+networks:
+  db_network:
+    driver: bridge
+
+services:
+  omeka:
+    image: libapps-admin.uncw.edu:8000/randall-dev/omeka-s:updating
+    container_name: omeka
+    env_file: .env
+    build: ./app
+    volumes:
+      - ./app/config/.htaccess:/var/www/html/.htaccess
+      - ./app/config/database.ini:/var/www/html/config/database.ini
+      - ./app/config/local.config.php:/var/www/html/local.config.php
+      # - ./app/files:/var/www/html/files
+      # - ./app/modules:/var/www/html/modules
+      # - ./app/themes:/var/www/html/themes
+    ports:
+      - "8008:80"
+    networks:
+      - db_network
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: amd64/mariadb:10.6.4
+    container_name: db
+    env_file: .env
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db_autoimport:/docker-entrypoint-initdb.d/
+    networks:
+      - db_network
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+
+  pma:
+    image: phpmyadmin/phpmyadmin:5.1.1
+    container_name: pma
+    env_file: .env
+    environment:
+      PMA_HOST: ${MYSQL_HOST}
+      PMA_ARBITRARY: 0
+      PMA_PORT: 3306
+    networks:
+      - db_network
+    volumes:
+      - /sessions
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - "8113:80"
