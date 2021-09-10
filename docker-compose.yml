@@ -13,10 +13,10 @@ services:
     container_name: omeka
     env_file: .env
     build: ./app
-    volumes:
-      - ./app/config/.htaccess:/var/www/html/.htaccess
-      - ./app/config/database.ini:/var/www/html/config/database.ini
-      - ./app/config/local.config.php:/var/www/html/local.config.php
+    # volumes:
+      # - ./app/config/.htaccess:.htaccess
+      # - ./app/config/database.ini:config/database.ini
+      # - ./app/config/local.config.php:config/local.config.php
       # - ./app/files:/var/www/html/files
       # - ./app/modules:/var/www/html/modules
       # - ./app/themes:/var/www/html/themes
@@ -57,3 +57,10 @@ services:
     restart: always
     ports:
       - "8113:80"
+
+  solr:
+    image: amd64/solr:8.9.0
+    container_name: solr
+    restart: always
+    networks:
+      - db_network
