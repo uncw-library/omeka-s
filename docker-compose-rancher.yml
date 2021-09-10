@@ -1,0 +1,52 @@
+version: '2'
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    environment:
+      PMA_HOST: db
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  omeka:
+    image: libapps-admin.uncw.edu:8000/randall-dev/omeka-s:updating
+    environment:
+      MYSQL_PASSWORD: CHANGEME1
+      MYSQL_USER: CHANGEME3
+      MYSQL_DATABASE: CHANGEME4
+      MYSQL_HOST: db
+    stdin_open: true
+    volumes:
+    - /home/randall/volumes/exhibits/files:/var/www/html/files
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  db-backup:
+    image: libapps-admin.uncw.edu:8000/randall-dev/test-sidekick
+    environment:
+      DB_HOST: db
+      DB_NAMES: CHANGEME4
+      ROOT_PASSWORD: CHANGEME2
+    stdin_open: true
+    volumes:
+    - /home/randall/volumes/backups/Backups/exhibits:/backups
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  db:
+    image: mariadb:10.6.4
+    environment:
+      MYSQL_USER: CHANGEME3
+      MYSQL_DATABASE: CHANGEME4
+      MYSQL_ROOT_PASSWORD: CHANGEME2
+      MYSQL_PASSWORD: CHANGEME1
+      TZ: America/New_York
+    stdin_open: true
+    volumes:
+    - /home/randall/volumes/exhibits/mysql:/var/lib/mysql
+    tty: true
+    command:
+    - --default-authentication-plugin=mysql_native_password
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.sidekicks: db-backup
