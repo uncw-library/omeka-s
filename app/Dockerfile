@@ -35,16 +35,18 @@ RUN curl -J -L -s -k \
 &&  chown -R www-data:www-data /var/www/html
 
 # Download all 3rd party modules & themes
+# https://omeka.org/s/modules/ has a list of latest modules.
+# github repo has more recent releases. the mirrored gitlab repo is often outdated.
 RUN wget https://github.com/Daniel-KM/Omeka-S-module-AdvancedSearch/releases/download/3.3.6.4/AdvancedSearch-3.3.6.4.zip -P modules \
-    &&  wget https://gitlab.com/Daniel-KM/Omeka-S-module-SearchSolr/-/archive/3.5.15/Omeka-S-module-SearchSolr-3.5.15.zip -P modules \
-    &&  wget https://gitlab.com/Daniel-KM/Omeka-S-module-Reference/-/archive/3.4.21/Omeka-S-module-Reference-3.4.21.zip -P modules \
+    &&  wget https://github.com/Daniel-KM/Omeka-S-module-SearchSolr/releases/download/3.5.28.3/SearchSolr-3.5.28.3.zip -P modules \
+    &&  wget https://github.com/Daniel-KM/Omeka-S-module-Reference/releases/download/3.4.30.3/Reference-3.4.30.3.zip -P modules \
     &&  wget https://github.com/Daniel-KM/Omeka-S-module-BulkEdit/releases/download/3.3.12.4/BulkEdit-3.3.12.4.zip -P modules \
     &&  wget https://github.com/omeka-s-modules/CSVImport/releases/download/v2.2.1/CSVImport-2.2.1.zip -P modules \
     &&  wget https://github.com/lauraleif/Export/releases/download/v1.5.0/Export.zip -P modules \
     &&  wget https://github.com/Libnamic/Omeka-S-GoogleAnalytics/releases/download/v1.2.2/LibnamicOmekaSGA.zip -P modules \
     &&  wget https://github.com/zerocrates/HideProperties/releases/download/v1.3.0/HideProperties-1.3.0.zip -P modules \
     &&  wget https://github.com/Daniel-KM/Omeka-S-module-ImageServer/releases/download/3.6.8.3/ImageServer-3.6.8.3.zip -P modules \
-    &&  wget https://gitlab.com/Daniel-KM/Omeka-S-module-IiifServer/-/archive/3.5.16.1/Omeka-S-module-IiifServer-3.5.16.1.zip -P modules \
+    &&  wget https://github.com/Daniel-KM/Omeka-S-module-IiifServer/releases/download/3.6.5.3/IiifServer-3.6.5.3.zip -P modules \
     &&  wget https://github.com/omeka-s-modules/Mapping/releases/download/v1.5.0/Mapping-1.5.0.zip -P modules \
     &&  wget https://github.com/zerocrates/PdfEmbedS/releases/download/v1.2.0/PdfEmbed-1.2.0.zip -P modules \
     &&  wget https://github.com/omeka-s-modules/Scripto/releases/download/v1.3.0/Scripto-1.3.0.zip -P modules \
