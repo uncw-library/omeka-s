@@ -7,6 +7,8 @@ volumes:
 networks:
   db_network:
     driver: bridge
+  solr_network:
+    driver: bridge
 
 services:
   omeka:
@@ -25,6 +27,7 @@ services:
       - "8008:80"
     networks:
       - db_network
+      - solr_network
     depends_on:
       - db
     restart: always
@@ -51,8 +54,6 @@ services:
       PMA_PORT: 3306
     networks:
       - db_network
-    volumes:
-      - /sessions
     depends_on:
       - db
     ports:
@@ -63,10 +64,11 @@ services:
     image: amd64/solr:8.10
     container_name: solr
     networks:
-      - db_network
+      - solr_network
     ports:
       - "8983:8983"
     volumes:
       - solr_data:/var/solr
+    command: ["solr-precreate", "omeka"]
     restart: always
 
