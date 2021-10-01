@@ -21,7 +21,7 @@ RUN apt-get -qq update && apt-get -qq -y --no-install-recommends install \
     libsodium-dev
 
 # install the PHP extensions we need
-RUN docker-php-ext-install -j$(nproc) iconv pdo pdo_mysql mysqli gd
+RUN docker-php-ext-install -j$(nproc) iconv pdo pdo_mysql mysqli gd intl
 RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/
 RUN yes | pecl install imagick && docker-php-ext-enable imagick
 
@@ -39,6 +39,8 @@ RUN curl -J -L -s -k \
 # github repo has more recent releases. the mirrored gitlab repo is often outdated.
 RUN wget https://github.com/Daniel-KM/Omeka-S-module-AdvancedSearch/releases/download/3.3.6.4/AdvancedSearch-3.3.6.4.zip -P modules \
     &&  wget https://github.com/Daniel-KM/Omeka-S-module-SearchSolr/releases/download/3.5.28.3/SearchSolr-3.5.28.3.zip -P modules \
+    &&  wget https://github.com/solariumphp/solarium/zipball/gh-pages -P modules \
+    &&  wget https://github.com/Daniel-KM/Omeka-S-module-Generic/releases/download/3.3.29/Generic-3.3.29.zip -P modules \
     &&  wget https://github.com/Daniel-KM/Omeka-S-module-Reference/releases/download/3.4.30.3/Reference-3.4.30.3.zip -P modules \
     &&  wget https://github.com/Daniel-KM/Omeka-S-module-BulkEdit/releases/download/3.3.12.4/BulkEdit-3.3.12.4.zip -P modules \
     &&  wget https://github.com/omeka-s-modules/CSVImport/releases/download/v2.2.1/CSVImport-2.2.1.zip -P modules \
