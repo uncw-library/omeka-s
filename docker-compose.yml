@@ -60,7 +60,7 @@ services:
     restart: always
 
   solr:
-    image: solr
+    image: amd64/solr:8.10
     container_name: solr
     networks:
       - db_network
