@@ -31,10 +31,12 @@ Make a file at omeka-s/.env with contents:
 
 ### Populate the database:
 
-1)	By putting a production db dump into ./db_autoimport, or
+All the module config settings are stored in the database.  There is no 'config-sync' that you find in Drupal.  Nor is there a file on the server with the modules' config settings.  If you are running this app on a dev box, be sure to copy the production db dump to your computer's ./db_autoimport.
+
+1)	RECOMMENDED: By putting a production db dump into ./db_autoimport, or
 1) 	Or by going through the initial site config at localhost:8008
 
-### Configure the solr modules:
+#### Configure the solr modules:
 
 	Roughly described at https://gitlab.com/Daniel-KM/Omeka-S-module-SearchSolr#quick-start
 
