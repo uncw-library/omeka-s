@@ -1,12 +1,17 @@
 # Omeka-S
 
-
 ### Official Omeka docs:
 
 	forum:  https://forum.omeka.org/c/omeka-s/8
 	site:   https://omeka.org/s/
 	github: https://github.com/omeka/omeka-s/blob/develop/README.md
 	modules list:  https://omeka.org/s/modules/
+
+## Note:
+
+Omeka seems designed for "code live on production".  I (Garrett) find local dev environments safer to maintain, so here is one approach for doing a local dev box:
+
+The docker image is identical on both production and dev.  The db however is floating.  Since the app's config settings are stored somewhere in the db, we need to pull the production db & push the production db.  It might work to pull the production db, announce a freeze on production, do dev revisions, then push the new production db + docker image.  There has to be a better way.
 
 # Dev startup:
 
@@ -28,28 +33,17 @@ Make a file at omeka-s/.env with contents:
 
 
 `docker-compose up --build`
-
+ 
 ### Populate the database:
 
-All the module config settings are stored in the database.  There is no 'config-sync' that you find in Drupal.  Nor is there a file on the server with the modules' config settings.  If you are running this app on a dev box, be sure to copy the production db dump to your computer's ./db_autoimport.
+All the module config settings are stored in the database.  There is no 'config-sync' like you find in Drupal.  Nor is there a file on the server with the modules' config settings.  If you are running this app on a dev box, be sure to copy the production db dump to your computer's ./db_autoimport.
 
 1)	RECOMMENDED: By putting a production db dump into ./db_autoimport, or
 1) 	Or by going through the initial site config at localhost:8008
 
-### If you want to view the solr index
+### Configure the solr modules if you lack a production db dump:
 
-Production's solr shall not be internet-accessible because it is not password protected.
-
-On dev box at http://localhost:8983
--  On left side "Core Selector" dropdown, select "omeka".
--  Select "Query"
--  "q" => \*:\*
--  "Execute Query" button will display everything in the core.
--  It will also display a well-formed solr query that can be pasted into firefox.
-
-#### Configuring the solr modules if you lack a production db dump:
-
-	Roughly described at https://gitlab.com/Daniel-KM/Omeka-S-module-SearchSolr#quick-start
+	Roughly copied from https://gitlab.com/Daniel-KM/Omeka-S-module-SearchSolr#quick-start
 
 1) At http://localhost:8008/admin/search-manager/solr
 	-  Note: Cores status == "Solr HTTP error: HTTP request failed"
@@ -73,6 +67,17 @@ On dev box at http://localhost:8983
 		- "Search engine": "solrEngine (Solr \[via Solarium\]"
 		- click "Save" button
 
+### If you want to view the solr index
+
+Production's solr shall not be internet-accessible because it is not password protected.
+
+On dev box at http://localhost:8983
+-  On left side "Core Selector" dropdown, select "omeka".
+-  Select "Query"
+-  "q" => \*:\*
+-  "Execute Query" button will display everything in the core.
+-  It will also display a well-formed solr query that can be pasted into firefox.
+
 # Version Upgrade advice
 
-On Upgrade: check if the source's local.config.php changes any variable names or layout.
+On Upgrade: check if the source's local.config.php changes any variable names or layout.  I don't know why this is important, but it was in the official docs.
