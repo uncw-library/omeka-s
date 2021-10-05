@@ -36,7 +36,18 @@ All the module config settings are stored in the database.  There is no 'config-
 1)	RECOMMENDED: By putting a production db dump into ./db_autoimport, or
 1) 	Or by going through the initial site config at localhost:8008
 
-#### Configure the solr modules:
+### If you want to view the solr index
+
+Production's solr shall not be internet-accessible because it is not password protected.
+
+On dev box at http://localhost:8983
+-  On left side "Core Selector" dropdown, select "omeka".
+-  Select "Query"
+-  "q" => \*:\*
+-  "Execute Query" button will display everything in the core.
+-  It will also display a well-formed solr query that can be pasted into firefox.
+
+#### Configuring the solr modules if you lack a production db dump:
 
 	Roughly described at https://gitlab.com/Daniel-KM/Omeka-S-module-SearchSolr#quick-start
 
@@ -61,18 +72,6 @@ All the module config settings are stored in the database.  There is no 'config-
 		- "Name: solrSearch"  *can be anything*
 		- "Search engine": "solrEngine (Solr \[via Solarium\]"
 		- click "Save" button
-
-
-### If you want to view the solr index
-
-Production's solr shall not be internet-accessible because it is not password protected.
-
-On dev box at http://localhost:8983
--  On left side "Core Selector" dropdown, select "omeka".
--  Select "Query"
--  "q" => \*:\*
--  "Execute Query" button will display everything in the core.
--  It will also display a well-formed solr query that can be pasted into firefox.
 
 # Version Upgrade advice
 
