@@ -11,7 +11,7 @@
 
 Omeka seems designed for "code live on production".  I (Garrett) find local dev environments safer to maintain, so here is one approach for doing a local dev box:
 
-The docker image is identical on both production and dev.  The db however is floating.  Since the app's config settings are stored somewhere in the db, we need to pull the production db & push the production db.  It might work to pull the production db, announce a freeze on production, do dev revisions, then push the new production db + docker image.  There has to be a better way.
+	Let the docker image be identical on both production and dev.  The db however floats.  Since the app's config settings are stored somewhere in the db, we need to manually keep the dev box in sync with the production db.   It might work to pull the production db, announce a freeze on production, do dev revisions, then push the new production db + docker image.  There has to be a better way.
 
 # Dev startup:
 
