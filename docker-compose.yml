@@ -1,0 +1,74 @@
+version: '3.7'
+
+volumes:
+  db_data:
+  solr_data:
+
+networks:
+  db_network:
+    driver: bridge
+  solr_network:
+    driver: bridge
+
+services:
+  omeka:
+    image: libapps-admin.uncw.edu:8000/randall-dev/omeka-s:updating
+    container_name: omeka
+    env_file: .env
+    build: ./app
+    # volumes:
+      # - ./app/config/.htaccess:.htaccess
+      # - ./app/config/database.ini:config/database.ini
+      # - ./app/config/local.config.php:config/local.config.php
+      # - ./app/files:/var/www/html/files
+      # - ./app/modules:/var/www/html/modules
+      # - ./app/themes:/var/www/html/themes
+    ports:
+      - "8008:80"
+    networks:
+      - db_network
+      - solr_network
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: amd64/mariadb:10.6.4
+    container_name: db
+    env_file: .env
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db_autoimport:/docker-entrypoint-initdb.d/
+    networks:
+      - db_network
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+
+  pma:
+    image: phpmyadmin/phpmyadmin:5.1.1
+    container_name: pma
+    env_file: .env
+    environment:
+      PMA_HOST: ${MYSQL_HOST}
+      PMA_ARBITRARY: 0
+      PMA_PORT: 3306
+    networks:
+      - db_network
+    depends_on:
+      - db
+    ports:
+      - "8113:80"
+    restart: always
+
+  solr:
+    image: solr:8.10
+    container_name: solr
+    networks:
+      - solr_network
+    ports:
+      - "8983:8983"
+    volumes:
+      - solr_data:/var/solr
+    command: ["solr-precreate", "omeka"]
+    restart: always
+
