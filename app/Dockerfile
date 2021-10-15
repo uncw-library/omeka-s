@@ -32,6 +32,7 @@ RUN curl -J -L -s -k \
 &&  rm /var/www/omeka-s-3.1.0.zip \
 &&  rm -rf /var/www/html \
 &&  mv /var/www/omeka-s /var/www/html \
+&&  mkdir -p /var/www/html/files \
 &&  chown -R www-data:www-data /var/www/html
 
 # Download all 3rd party modules & themes
