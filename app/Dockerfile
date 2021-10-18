@@ -34,7 +34,7 @@ RUN curl -J -L -s -k \
 &&  mv /var/www/omeka-s /var/www/html \
 &&  mkdir -p /var/www/html/files \
 &&  mkdir -p /var/www/html/modules \
-&&  mkdir -p /var/www/html/logs} \
+&&  mkdir -p /var/www/html/logs \
 &&  chown -R www-data:www-data /var/www/html
 
 # Download all 3rd party modules & themes
