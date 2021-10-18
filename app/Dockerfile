@@ -65,7 +65,8 @@ RUN wget https://github.com/Daniel-KM/Omeka-S-module-AdvancedSearch/releases/dow
     &&  wget https://github.com/omeka-s-themes/cozy/releases/download/v1.5.1/theme-cozy-v1.5.1.zip -P themes \
     &&  wget https://github.com/omeka-s-themes/thanksroy/releases/download/v1.0.0/theme-thanksroy-v1.0.0.zip -P themes \
     &&  unzip 'themes/*.zip' -d themes \
-    && rm *.zip
+    &&  rm modules/*.zip \
+    &&  rm themes/*.zip
 
 # Copy our custom files into the image
 COPY --chown=www-data:www-data ./config/database.ini /var/www/html/config/database.ini
