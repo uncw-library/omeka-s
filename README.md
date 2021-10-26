@@ -81,3 +81,21 @@ On dev box at http://localhost:8983
 # Version Upgrade advice
 
 On Upgrade: check if the source's local.config.php changes any variable names or layout.  I don't know why this is important, but it was in the official docs.
+
+
+
+# Troubleshooting tips
+
+1)  if solr searchbox gives no results, try reindexing solr.
+
+2)  if solr searchbox give results for "" but no results for a word that you know is in an item's metadata, try `curl -X POST -H 'Content-type:application/json' --data-binary '{"add-copy-field" : {"source":"*","dest":"_text_"}}' http://localhost:8983/solr/omeka/schema`
+
+  -- the above command doubles the size of your solr index, so a slimmer copy field command would be nice.
+  
+  sources:  
+
+    https://solr.apache.org/guide/8_10/schema-api.html#add-a-new-copy-field-rule
+    https://forum.omeka.org/t/search-field-doesnt-return-results-with-solr/11650/11
+ 
+
+

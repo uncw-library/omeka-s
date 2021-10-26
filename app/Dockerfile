@@ -1,4 +1,4 @@
-FROM php:7.4.23-apache
+FROM amd64/php:7.4.23-apache
 
 RUN a2enmod rewrite
 
@@ -69,6 +69,7 @@ RUN wget https://github.com/Daniel-KM/Omeka-S-module-AdvancedSearch/releases/dow
     &&  rm themes/*.zip
 
 # Copy our custom files into the image
+COPY --chown=root:root ./config/php.ini /usr/local/etc/php/php.ini
 COPY --chown=www-data:www-data ./config/database.ini /var/www/html/config/database.ini
 COPY --chown=www-data:www-data ./config/.htaccess /var/www/html/.htaccess
 COPY --chown=www-data:www-data ./config/local.config.php /var/www/html/config/local.config.php
