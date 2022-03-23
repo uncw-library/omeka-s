@@ -33,6 +33,13 @@ Make a file at omeka-s/.env with contents:
 
 
 `docker-compose up --build`
+
+### Build & push to production
+
+```
+docker build --no-cache --platform linux/x86_64/v8 -t libapps-admin.uncw.edu:8000/randall-dev/omeka-s ./app
+docker push libapps-admin.uncw.edu:8000/randall-dev/omeka-s
+```
  
 ### Populate the database:
 
